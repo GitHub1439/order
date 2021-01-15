@@ -1,0 +1,380 @@
+/**app.wxss**/
+@import "./css/iconfont.wxss";
+@import "./css/pop.wxss";
+@import "./css/cart.wxss";
+/* 
+	main color:;
+		#fa4d4f 红色
+		#fcc953 黄色
+		#00a0ea 蓝色
+
+		#f3f3f3 浅色背景
+
+ */
+
+/* element common [[  */
+page{
+	background-color: #F5F6FA;
+	font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+	/*height: 100%;*/
+	font-size: 28rpx;
+	box-sizing: border-box;
+}
+.fontfYahei{
+	font-family: 'Microsoft YaHei';
+}
+view, scroll-view, textarea, input, button{
+	box-sizing: border-box;
+}
+button::after{
+	border: none;
+}
+image{
+	width:100%;
+	height:100%;
+}
+.textarea-box{
+	width:100%;
+	height:140rpx;
+	padding:12rpx 12rpx;
+	background-color:#f5f6fa;
+	border-radius:10rpx;
+}
+.input-textarea{
+	width: 100%;
+	color: #989898;
+	font-size:28rpx;
+	line-height: 46rpx;
+}
+.input-textarea-placeholder{
+	color: #989898;
+	font-size:26rpx;
+}
+
+.placeholder2{
+	line-height: 34rpx;
+}
+.hide{
+	display: none;
+}
+/* element common ]]	*/
+
+
+
+
+/* class common [[	*/
+.flex{
+	display: flex;
+	justify-content:space-between;
+}
+.ellipsis{
+	white-space: nowrap;			/* 不换行 */
+	text-overflow: ellipsis;	/* 当对象内文本溢出时显示省略标记（...）	*/
+	overflow:hidden;				/* 溢出隐藏 */
+}
+.more-ellipsis{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: -webkit-box;		/* 必须结合的属性，将对象作为弹性伸缩盒子模型显示 */
+	-webkit-line-clamp: 3;		/* 用来限制在一个块元素显示的文本的行数 */
+	-webkit-box-orient: vertical;  /* 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 */
+}
+.clearfix::after{
+	content:'';
+	display: block;
+	clear: both;
+}
+/* .border-blue-left{
+	position: relative;
+} */
+/* .border-blue-left::before{
+	content:'';
+	position: absolute;
+	top:0;
+	left:0;
+	width:8rpx;
+	height: 100%;
+	background-color: #00a0ea;
+} */
+
+.red{
+	color:#fa4d4f !important;
+}
+.common-title{
+	line-height: 70rpx;
+	padding:0 30rpx;
+	color:#989898;
+}
+
+
+/* class common ]]  */
+
+
+
+
+
+
+
+
+
+
+/* 底下按钮 */
+.btn-red{
+	width:100%;
+	height:80rpx;
+	line-height: 80rpx;
+	text-align: center;
+	font-size:28rpx;
+	color:#fff;
+	background-color: #fa4d4f;
+	border-radius: 10rpx;
+}
+.btn-white{
+	font-size: 28rpx;
+	line-height: 60rpx;
+	height:62rpx;
+	text-align: center;
+	padding:0 20rpx;
+	color: #666;
+	background-color: #fff;
+	border: 1rpx solid #e5e5e5;
+	border-radius: 2rpx;
+}
+.bottom-btns{
+	background-color: #fff;
+	padding:30rpx;
+}
+
+.footer{
+	position: fixed;
+	bottom:0;
+	left:0;
+	width:100%;
+}
+.footer.one-btns{
+	padding:30rpx 40rpx;
+}
+.footer.one-btns .btn-red text.mr{
+	margin-right:6rpx;
+}
+
+
+
+
+
+
+
+/* 顶部搜索区 [[ */
+.top-search{
+	position: absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height: 80rpx;
+	display: flex;
+}
+.top-search .search-wrap{
+	width:100%;	
+	background-color: #fff;
+	height:60rpx;
+	border-radius: 60rpx;
+	position: relative;
+	margin-top: 10rpx;
+	padding-left: 68rpx;
+	margin-right: 30rpx;
+	line-height: 30rpx;
+}
+.top-search .search-wrap image.icon-search{
+	width:30rpx;
+	height:30rpx;
+	position: absolute;
+	top:15rpx;
+	left:30rpx;
+}
+.top-search .search-wrap .input{
+	display: block;
+	width: 100%;
+	font-size:28rpx;
+	line-height: 30rpx;
+	height: 30rpx;
+	padding:0;
+	margin-top: 16rpx;
+	color: #989898;
+}
+
+
+.search-box {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100rpx;
+	background-color: #fff;
+	padding: 20rpx 30rpx;
+}
+.search-content {
+	height:60rpx;
+	line-height: 60rpx;
+	padding-left:10rpx;
+	background-color: #EAEBF0;
+	border-radius: 10rpx;
+	-webkit-border-radius: 10rpx;
+	-moz-border-radius: 10rpx;
+}
+.icon-sousuo{
+	display: inline-block;
+	vertical-align: middle;
+	color:#AEB1BE;
+	font-size: 32rpx;
+	margin-top: -8rpx;
+}
+.search-key {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 60rpx;
+	padding-left: 20rpx;
+	color:#AEB1BE;
+	font-size: 26rpx;
+}
+.search-placeholder{
+	color:#AEB1BE;
+}
+.search-holder {
+	font-size: 26rpx;
+	color:#AEB1BE;
+	padding-left:20rpx;
+}
+/* 顶部搜索区 ]] */
+
+
+
+
+
+
+
+/* 订单商品 [[  */
+.o-details{
+	background-color: #fff;
+  margin-bottom: 20rpx;
+}
+.o-total{
+	line-height: 70rpx;
+	padding-right: 30rpx;
+	position: relative;
+	top:4rpx;
+}
+.o-total text{
+	float: left;
+}
+.o-total text.sm-text{
+	color:#1d1d1d;
+	font-size:28rpx;
+	margin-right: 4rpx;
+}
+.o-total text.price-text{
+	font-size: 30rpx;
+	color: #fa4d4f;
+	position: relative;
+	top:2rpx;
+}
+
+
+.o-goods{
+	padding:0 20rpx 20rpx;
+}
+.o-good{
+	padding:12rpx 16rpx;
+	margin-top: 16rpx;
+	background-color: #f3f3f3;
+}
+.o-good.good0{
+	margin-top: 0;
+}
+.o-good .o-g-row{
+	display: flex;
+	justify-content: space-between;
+	line-height: 50rpx;
+}
+.o-good .o-g-name{
+	font-size:30rpx;
+}
+.o-good .o-g-count{
+	color: #989898;
+}
+.o-good .o-g-attributes{
+	color: #989898;
+}
+
+.o-total{
+	text-align: right;
+	line-height: 60rpx;
+}
+.o-good .o-pkg-row{
+  line-height: 40rpx;
+}
+.o-good .o-pkg-name{
+  color: #666;
+  font-size: 26rpx;
+}
+.o-good .o-pkg-count {
+   color: #999;
+}
+/* 订单商品 ]]  */
+
+
+.look-more{
+	background-color: #fff;
+	text-align: center;
+	line-height: 50rpx;
+	padding-bottom: 10rpx;
+}
+.look-more text{
+	color: #333;
+}
+.look-more image{
+	width:35rpx;
+	height:35rpx;
+	margin-left: 8rpx;
+	position: relative;
+	top:8rpx;
+}
+.look-more image.reverse{
+	transform: rotate(180deg);
+}
+
+
+
+
+
+
+
+
+
+
+/* 无数据 */
+.no-datas{
+	width:100%;
+	text-align: center;
+	margin-top: 80rpx;
+	color:#989898;
+}
+.no-datas-container{
+	background-color:#fff;
+	border-top:1px solid #fff;
+	border-bottom: 1px solid #fff;
+	text-align: center;
+	margin-top: 24rpx;
+	padding-bottom: 100rpx;
+}
+.no-datas-container image{
+	display: block;
+	width: 196rpx;
+	height: 160rpx;
+	margin:120rpx auto 40rpx;
+}
+.no-datas-container text{
+	display: block;
+	color: #989898;
+	margin:0 auto;
+	line-height: 1.5em;
+	text-align: center;
+}

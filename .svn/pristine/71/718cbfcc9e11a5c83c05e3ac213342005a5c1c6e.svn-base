@@ -1,0 +1,18 @@
+{
+  "extEnable": true,
+  "extAppid": "wx0eedcc995a7ababf",
+  "directCommit": false,
+  "ext": {
+    "entvesion": "V2",
+    "entcode": "1210347",
+    "extappid": "wx0eedcc995a7ababf",
+    "indexbanner": "",
+    "dytemplatewm":"",
+    "dytemplate":"",
+    "theme":{
+      "major":"#FF553E",
+      "minor":"#FFFBC7",
+      "assist":"#FCD2D0"
+    }
+  }
+}

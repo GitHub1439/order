@@ -1,0 +1,53 @@
+<!--pages/balance/balance.wxml-->
+
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<wxs module="filters" src="../../utils/filters.wxs"></wxs>
+<block>
+	<view style="padding-top: 210rpx;">
+	<view class="integral-nums">
+		<view>
+			<view class="integral-num">￥{{filters.toFix(balance)}}</view>
+			<view class="integral-able">可用余额{{balance[length-1]}}</view>
+		</view>
+		<!-- <view class="integral-history">
+            历史积分{{historyIntegral}}
+        </view> -->
+	</view>
+	<view class="amplification-container">
+		<!-- <view style="width: 100%;" > -->
+			<!-- <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;" class="list"
+			 bindscrolltolower="bindDownLoad" bindscrolltoupper="topLoad" bindscroll="scroll" scroll-with-animation="true">
+				<view class="integral-amplification" wx:if="{{balanceItem.length>0}}" wx:for="{{balanceItem}}" wx:key="{{index}}">
+					<view>
+						<view class="integral-award">{{item.rectype}}</view>
+						<view class="integral-date">{{item.rdate}}</view>
+					</view>
+					<view class="amplificationnum" wx:if="{{item.changemoney < 0}}" style="color:#1F1F1F;">{{item.changemoney}}</view>
+					<view class="amplificationnum" wx:if="{{item.changemoney > 0}}" style="color:#CB9B0C;">+{{item.changemoney}}</view>
+				</view>
+			</scroll-view> -->
+
+		<!-- </view> -->
+		<view class="integral-amplification" wx:if="{{balanceItem.length>0}}" wx:for="{{balanceItem}}" wx:key="{{index}}">
+			<view>
+				<view class="integral-award">{{item.rectype}}</view>
+				<view class="integral-date">{{item.rdate}}</view>
+			</view>
+			<view class="amplificationnum" wx:if="{{item.changemoney <= 0}}" style="color:#1F1F1F;">{{item.changemoney}}</view>
+			<view class="amplificationnum" wx:if="{{item.changemoney > 0}}" style="color:#CB9B0C;">+{{item.changemoney}}</view>
+		</view>
+		<block wx:if="{{balanceItem.length==0}}">
+			<view class="no-coupon-container">
+				<view class="no-coupon">暂无余额账单</view>
+			</view>
+		</block>
+
+	</view>
+</view>
+</block>

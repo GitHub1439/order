@@ -1,0 +1,120 @@
+/* pages/address/addressList/addressList.wxss */
+.container {
+  min-height: 100%;
+  padding:20rpx 20rpx 80rpx;
+}
+.touch-item {
+  font-size: 26rpx;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20rpx;
+  overflow: hidden ;
+  background-color:#fff;
+  border-radius: 10rpx;
+}
+.notChoose{
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #AEB1BE;
+ }
+.content {
+  width: 100%;
+  padding: 20rpx;
+  margin-right:0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(90px);
+  transform: translateX(90px);
+  margin-left: -90px;
+} 
+.name {
+  position: relative;
+  display: block;
+  font-size: 32rpx;
+  padding: 0 0 10rpx;
+  color: #1f1f1f;
+}
+.edit {
+  position: absolute;
+  top: -8rpx;
+  right:0;
+  color: #AEB1BE;
+}
+.address{
+  font-size: 24rpx;
+  color: #AEB1BE;
+  padding-top: 10rpx;  
+} 
+.del {
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 32rpx;
+  -webkit-transform: translateX(90px);
+  transform: translateX(90px);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;  
+}  
+  
+.touch-move-active .content,
+.touch-move-active .del { 
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+.add-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+}
+.default {
+  color: #fff;
+  padding: 6rpx 10rpx;
+  border-radius: 4rpx;
+  font-size: 24rpx;
+}
+.nodata-content{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX( -50%) translateY(-50%);
+  -webkit-transform: translateX( -50%) translateY(-50%);
+  -moz-transform: translateX( -50%) translateY(-50%);
+  font-size: 30rpx;
+  color: #AEB1BE;
+}
+.nodata {
+  position: relative;
+}
+.nodata::before {
+  position: absolute;
+  display: block;
+  left: -120rpx;
+  top: 20rpx;
+  content: '';
+  width: 100rpx;
+  height: 1rpx;
+  border-top: 1rpx solid #AEB1BE;
+}
+.nodata::after {
+  position: absolute;
+  display: block;
+  right: -120rpx;
+  top: 20rpx;
+  content: '';
+  width: 100rpx;
+  height: 1rpx;
+  border-top: 1rpx solid #AEB1BE;
+}
+  

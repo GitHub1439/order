@@ -1,0 +1,165 @@
+
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<view class="detail-page">
+	<!---订单状态-->
+	<view class="state-container">
+		<view class="mealType" style="background-color: {{theme.major}}">{{orderWay}}</view>
+			<!--未申请退款、单据状态不为已取消-1、已退单3--->
+		<block wx:if="{{billData.refundstate == 0 && billData.state != 3 && billData.state != -1}}">
+				<view class="order-tips">
+					<!--外卖--->
+					<block  wx:if="{{billData.eatway == 1 }}">
+							<block wx:if="{{billData.riderphone}}">
+								<view class="billno-title titleRight">{{billData.deliverysysname+billData.ridername+"为您配送"}}</view>
+								<view class="billno" >{{billData.riderphone}}</view>
+								<view class="callDelive" data-phone="{{billData.riderphone}}" bindtap="callPhone">联系骑手》</view>
+							</block>
+					</block>
+					<!---堂食-->
+					<block wx:else>
+								<view class="billno-title">取餐号</view>
+								<view class="billno" >{{billData.billno}}</view>
+					</block>
+				</view>
+
+				<view class="order-state-list  flex-between" style="margin-top:{{billData.eatway == 1 && !billData.riderphone?'80rpx':'40rpx'}}">
+					<view class="order-state-item {{item.className}} {{billData.state == item.state?'order-active':''}}" wx:for="{{billStatesConst}}" data-text="{{item.stateText}}" wx:for-item="item" wx:key="index">
+							<icon class="iconfont {{item.iconPath}}"></icon>
+							<text class="icon-text">{{item.stateText}}</text>
+					</view>
+				</view>
+		</block>
+		<block wx:else>
+					<view class="noProcess">
+							{{orderStateText}}
+					</view>
+		</block>
+	</view>
+
+
+
+	<!---门店--->
+	<view class="store-info" >
+		<view class="storename" >{{billData.storename}}</view>
+		<view class="store-address" >{{billData.vcaddr?billData.vcaddr:'该门店未设置位置信息'}}</view>
+		<view class="icon-content" wx:if="{{billData.vctel}}" bindtap="callPhone" data-phone="{{billData.vctel}}">
+			<image class="iconstore" src="../../../image/icons/callphone.png"></image>
+			<!-- <image class="iconstore iconstore-right" src="../../../image/icons/navigation.png"></image> -->
+		</view>
+	</view>
+
+	<!--商品--->
+   <view class="goods-container">
+        <view class="goods-content"  wx:for="{{billData.billitems}}" wx:for-index="index" wx:for-item="good" wx:key="produid">
+					<view class="good-item flex-between">
+						<view class="good-name">
+							<text>{{good.prodname}}</text>
+							<view class="good-attributes" wx:if="{{good.attributes}}">{{good.attributes}}</view>
+						</view>
+						<view class="good-count-price">
+							<text class="good-count count">×{{good.amount}}</text>
+							<text class="good-price">￥{{good.dealpri}}</text>
+						</view>
+					</view>
+						<!--套餐-->
+					<block wx:if='{{good.ispkg == 1}}' >
+              <view class="o-g-row o-pkg-row" wx:for="{{good.pkgitems}}" wx:for-item="pkgood" wx:key="quantity">
+                <view class="o-pkg-name" >
+                  {{pkgood.prodname}}{{pkgood.attributes ? "（" + pkgood.attributes + "）" : ""}}/{{pkgood.unit}} 
+                  <text class='o-pkg-count'>  x{{pkgood.quantity}}</text>  
+                </view>
+              </view>
+            </block>
+        </view>
+        <view class="good-coupon flex-end">
+          <view class="coupons-content">
+						<text>优惠￥{{discount}}，</text>
+						<text> 实付</text>
+            <text class="orderTotalMoney">¥ {{billData.paymoney}}</text>
+          </view>
+        </view>
+    </view> 
+		<!----收货地址-->
+		<view class="store-info orderuserInfo" wx:if="{{billData.eatway == 1}}" >	
+			<view class="row flex">
+					<view class="label" >收货信息</view>
+					<view class="orderuser">
+						{{billData.billitems[0].consignee}} 
+					</view>
+			</view>
+			<view class="row flex">
+					<view class="label" ></view>
+					<view class="orderuser">
+						{{billData.billitems[0].mobileno}} 
+					</view>
+			</view>
+			<view class="row flex">
+					<view class="label" ></view>
+					<view class="orderuser">
+						{{billData.billitems[0].address}} 
+					</view>
+			</view>
+		</view>
+		<!--单据信息-->
+		<view class="order-info" >
+			<view class="row flex" >
+				<view class="label" >下单时间</view>
+				<view class="label-right" >{{billData.billingdate}}</view>
+			</view>
+			<view class="row flex" >
+				<view class="label" >订单号</view>
+				<view class="label-right" >{{billData.buid}}</view>
+			</view>
+			<view class="row flex" >
+				<view class="label" >订单备注</view>
+				<view class="label-right" >{{ billData.remarks }}</view>
+			</view>
+			<view class="row flex" >
+				<view class="label" >就餐方式</view>
+				<view class="label-right" >{{billData.eatway==0 ? '堂食' : ((billData.eatway==1)?'外卖':'外带') }}</view>
+			</view>
+			<block wx:if="{{ billData.state==-1 }}" >
+				<!-- 状态,0未接单、1已接单、2已完成、-1已取消 -->
+				<view class="row flex" >
+					<view class="label" >取消原因</view>
+					<view class="label-right" >{{ billData.creason }}</view>
+				</view>
+				<view class="row flex" >
+					<view class="label" >取消时间</view>
+					<view class="label-right" >{{ billData.cancledate }}</view>
+				</view>
+			</block>
+
+			<block wx:for="{{ billData.payitems }}" wx:for-index="indexa" wx:for-item="payitem" wx:key="paymoney" >
+				<view class="row flex mt20" >
+					<view class="label" >支付方式</view>
+					<view class="label-right" >{{ payitem.dictionaryname }}</view>
+				</view>
+				<view class="row flex" >
+					<view class="label" >支付金额</view>
+					<view class="label-right" >¥ {{ payitem.paymoney }}</view>
+				</view>
+				<view class="row flex" >
+					<view class="label" wx:if="{{ payitem.dictionarycode==405 }}" >优惠券编号：</view>
+					<view class="label" wx:if="{{ payitem.dictionarycode==501 || payitem.dictionarycode==502 }}" >储值卡号：</view>
+					<view class="label" wx:if="{{ payitem.dictionarycode==307 }}" >第三方单号：</view>
+					<view class="label-right" >{{ payitem.payno }}</view>
+				</view>
+			</block>
+		
+			<view class="row flex mt20" wx:if="{{ billData.paydate }}" >
+				<view class="label" >支付时间</view>
+				<view class="label-right" >{{ billData.paydate }}</view>
+			</view>
+
+		</view>
+
+
+</view>
+

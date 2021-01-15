@@ -1,0 +1,166 @@
+
+page{
+	padding-top: 30rpx;
+	color: #1d1d1d;
+}
+.flex-between {
+	display: flex;
+	justify-content: space-between;
+}
+.store-info{
+	position: relative;
+	margin:0 30rpx;
+	border-bottom: 1rpx dashed #EAEBF0;
+}
+.store-info .storename{
+	padding: 20rpx 0;
+	font-size:28rpx;
+	color:#111;
+}
+.store-address{
+	font-size:26rpx;
+	color:#AEB1BE;
+	padding-bottom: 20rpx;
+}
+.state {
+	position: absolute;
+	top: 20rpx;
+	right: 0;
+	font-size: 32rpx;
+}
+
+.order{
+	background-color: #fff;
+	margin: 0 20rpx 20rpx;
+	border-radius: 10rpx;
+}
+.good-info {
+	padding: 0 30rpx;
+}
+.good-name {
+	padding: 30rpx 0 ;
+	font-size: 28rpx;
+	color: #1f1f1f;
+}
+.count {
+	font-size: 26rpx;
+	color:#AEB1BE;
+}
+.price {
+	font-size: 28rpx;
+	color: #1f1f1f;
+	font-weight: bold;
+}
+.order-item {
+	line-height: 30rpx;
+	padding-bottom: 20rpx;
+}
+.order-item .store-address{
+	padding-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+.number-group{
+	display: flex;
+	justify-content: space-between;
+	margin:0 20rpx;
+	padding:0 10rpx;
+	border-bottom:1rpx solid #e5e5e5;
+}
+.o-dinner-title{
+	text-align: center;
+	line-height: 60rpx;
+	padding-top: 20rpx;
+	color:#333;
+}
+.o-dinner-label{
+	font-size: 24rpx;
+	margin-right: 4rpx;
+}
+.o-dinner-number{
+	font-size: 32rpx;
+	font-weight: bold;
+}
+.o-storename-title{
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1rpx solid #e5e5e5;
+	margin:0 20rpx;
+	padding:10rpx;
+}
+.o-storename .o-storename-name{
+	font-size:30rpx;
+	line-height: 50rpx;
+}
+.o-storename .o-storename-date{
+	font-size:24rpx;
+	color:#989898;
+	line-height: 30rpx;
+}
+.o-status{
+	line-height: 80rpx;
+}
+
+.order .o-goods{
+	margin:0 20rpx;
+	padding:0;
+	max-height: 216rpx;
+	overflow: hidden;
+}
+.o-goods .o-good{
+	background-color: #fff;
+	padding-right: 0;
+	padding:0 0 0 16rpx;
+}
+.order .o-total-info{
+	font-size: 28rpx;
+	text-align: right;
+	margin:20rpx 20rpx 10rpx;
+	line-height: 50rpx;
+}
+.order .o-total-info text{
+	font-weight: bold;
+}
+.order .o-total-info text.num{
+	margin:0 4rpx;
+}
+
+
+
+
+.order .o-dining{
+	display: flex;
+	justify-content: space-between;
+	line-height: 80rpx;
+	margin:0 20rpx;
+	border-top: 1rpx solid #e5e5e5;
+}
+.order .o-gray-label{
+	color:#989898;
+}
+
+
+
+
+.order .btns{
+	margin:0 20rpx;
+	padding:30rpx 0;
+	border-top: 1rpx solid #e5e5e5;
+}
+.order .btns .btn-white{
+	float: right;
+	width: 180rpx;
+	margin-left:16rpx;
+}
+.color-red {
+  color:#fa4d4f;
+}

@@ -1,0 +1,23 @@
+小程序配置
+测试:{
+   开发appid：wx7f8a712df1dae8a3 
+   请求地址：https://weipos.ruipos.net/TestStoresManage  
+   extjson配置：wx0eedcc995a7ababf（ext.json）
+   门店： 1210347
+}
+
+正式:{
+   开发appid： wx827976aa2bf485e3   
+   请求地址：https://wx.weipos.com/StoresManage  
+   extjson配置：wx7f8a712df1dae8a3（ext.json） 
+   门店：1210016
+}
+
+v2.2.4半仙定制版修复扫描桌台二维码修复
+v2.2.5标准品修复扫描桌台二维码修复
+v2.2.9营销卡券修复一些问题
+v2.3.0优化功能
+v2.3.1费用允许折扣
+v2.3.2储值卡储值
+
+小程序桌台二维码小程序解析示例：pages/home/storeIndex/storeIndex?storeuid=9355&tablecode=01

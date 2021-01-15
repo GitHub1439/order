@@ -1,0 +1,229 @@
+
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<template is="chooseTime" data="{{isShow, title, value, days, times}}"></template>
+
+<view class="body {{isScroll ? '' : 'overflow-hidden' }}">
+  <!----门店地址、收货地址-->
+  <block wx:if="{{eatType == 0}}">
+    <view class="store-info">
+      <view class="storename" >{{store.storename}}</view>
+      <view class="store-address" >{{store.vcaddr}}</view>
+      <icon class="iconfont icon-daohang"></icon>
+	  </view>
+  </block>
+  <block wx:else>
+    <view class="user-content" bindtap="setAddress">
+      <view class="store-info" wx:if="{{selectAddress}}">
+        <view class="storename" >{{selectAddress.consignee}} | {{selectAddress.mobileno}}</view>
+        <view class="store-address" >{{selectAddress.address}}</view>
+        <icon class="iconfont icon-daohang"></icon>
+      </view>
+      <view class="store-info" wx:else>
+        <view class="storename" >去设置地址</view>
+      </view>
+    </view>
+  </block>
+  
+
+	<view class="table-number flex-between" wx:if="{{tablecode && eatway != 1}}" >
+		<view class="title" >桌台号</view>
+		<view class="number fontfYahei" >{{tablecode}}</view>
+	</view>
+
+  <!---就餐方式--->
+  <view class="type-container flex-between">
+      <block wx:if="{{eatType == 1}}">
+        <view class="type-item" data-type="0" bindtap="changeEeatType" wx:if="{{isOwn}}">
+          <icon class="iconfont iconxiaochengxubiaozhunyihuifu-"></icon>
+          门店自取
+        </view>
+        <view class="type-item"  style="color:{{theme.major}};border:1rpx solid {{theme.major}}" wx:if="{{isTakeout}}">
+          <icon class="iconfont iconxiaochengxubiaozhunyihuifu-1"></icon>
+          外卖配送
+        </view>
+      </block>
+      <block wx:else>
+        <view class="type-item" style="color:{{theme.major}};border:1rpx solid {{theme.major}}"  wx:if="{{isOwn}}">
+          <icon class="iconfont iconxiaochengxubiaozhunyihuifu-"></icon>
+          门店自取
+        </view>
+        <view class="type-item" data-type="1" bindtap="changeEeatType"  wx:if="{{isTakeout}}">
+          <icon class="iconfont iconxiaochengxubiaozhunyihuifu-1"></icon>
+          外卖配送
+        </view>
+      </block>
+  </view>
+
+  <!---就餐时间、店内就餐、打包带走、备注等-->
+  <view class="eat-content">
+    <view class="eat-item flex-between" wx:if="{{bespeak}}">
+      <view>就餐时间</view>
+      <view bind:tap="setBespeak">
+       {{orderTime?orderTime:'现在'}} 
+       <icon class="iconfont iconyoujiantou icon-right"></icon>
+      </view>
+    </view>
+    <view class="eat-item eat-in"  wx:if="{{eatType == 0 && eatIn}}">
+      <view class="flex-between">
+        <view>我在店内就餐</view>
+        <view bindtap="changeEatWay">
+            <!-- <icon class="iconfont icon-danxuan" style="color:{{eatway==0?theme.major:'#ddd'}}"></icon> -->
+           <image class="check-radio" src="/image/pay/radio_active.png" wx:if="{{eatway==0}}"></image>
+           <image class="check-radio" src="/image/pay/radio.png" wx:else></image>
+        </view>
+      </view>
+      <view class="number-list" wx:if="{{eatway==0 && useMealfee==1}}">
+          <view class="number-item" wx:for="{{numList}}" wx:key="index" wx:if="{{index!=0}}">
+            <text class="{{index === numactive?'active':''}}" catchtap="choosedNumber" data-index="{{index}}" style="background-color:{{index === numactive?theme.major:''}}">{{index==0?"加菜":index+"人"}}</text>
+          </view>
+      </view>
+      <view class="number-item" style="margin-top: 10rpx;" wx:if="{{eatway==0 && useMealfee==1}}">
+            <text class="{{0 == numactive?'active':''}}" bindtap="choosedNumber" data-index="0" style="background-color:{{0 == numactive?theme.major:''}}">加菜</text>
+      </view>
+    </view>
+     <view class="eat-item flex-between" wx:if="{{isBale && eatType == 0 || eatType == 2}}">
+      <view>我要打包带走</view>
+      <view bindtap="changeEatWay">
+           <image class="check-radio" src="/image/pay/radio_active.png" wx:if="{{eatway==2}}"></image>
+           <image class="check-radio" src="/image/pay/radio.png" wx:else></image>
+      </view>
+    </view>
+    <view class="eat-item remarks">
+      <view class="flex-between" bindtap="isShowRemark">
+        <view>备注</view>
+        <view class="remarks-more">
+            <icon class="iconfont iconyoujiantou icon-right"></icon>
+        </view>
+      </view>
+     <view class="o-remarks" wx:if="{{showRemark}}">
+      <view class="textarea-box" >
+          <input class="input-textarea" placeholder-class="input-textarea-placeholder" value="{{remarks}}" maxlength="40" bindinput="bindTextareaInput" bindconfirm="bindTextareaBlur" bindblur="bindTextareaBlur" placeholder="餐饮规格可参阅订单详情显示，若有其他要求，请说明" >
+          </input>
+      </view>
+      </view>
+    </view>
+  </view>
+  
+  <!--就餐方式商品-->
+  <view class="goods-container" wx:if="{{goodDetail.length >0}}">
+        <view class="good-title flex-between">
+          <view>{{typeTitle}}费详情</view>
+          <view>{{typeTitle}}费小计：<text>{{detailTotal}}</text></view>
+        </view>
+        <view class="goods-content flex-between"  wx:for="{{goodDetail}}"  wx:for-index="idx" wx:key="produid" wx:for-item="good" >
+          <view class="good-name">
+            <text>{{good.prodname}}</text>
+            <view class="good-attributes" wx:if="{{good.attributes}}">{{good.attributes}}</view>
+          </view>
+          <view class="good-count-price">
+            <text class="good-count count" wx:if="{{eatway == 0}}">×{{numberPepole}}</text>
+            <text class="good-price">￥{{good.price}}</text>
+          </view>
+        </view>
+  </view>
+
+  
+   <view class="goods-container">
+        <view class="good-title">商品明细</view>
+        <view class="goods-content flex-between {{((index ==(selectData.length -1)) && !grantitem)?'dashed-bottom':''}}" data-index="{{index}}" data-lendth="{{selectData.length -1}}"  wx:for="{{selectData}}"  wx:for-index="index" wx:key="produid" wx:for-item="good" >
+          <view class="good-name">
+            <text>{{good.prodname}}</text>
+            <view class="good-attributes" wx:if="{{good.attributes}}">{{good.attributes}}</view>
+			<view class="good-attributes" wx:if="{{good.ispkg == 1}}" >
+				<block wx:for="{{good.pkgitems}}" wx:for-item="pkgood" wx:for-index="pkidx">
+					<text wx:if="{{pkidx != good.pkgitems.length-1}}">{{pkgood.prodname}}{{pkgood.attributes ? "（" + pkgood.attributes + "）" : ""}}+</text>
+					<text wx:else>{{pkgood.prodname}}（{{pkgood.attributes}}）</text>
+				</block>
+			</view>
+          </view>
+          <view class="good-count-price">
+            <text class="good-count count">×{{good.count}}</text>
+            <text class="good-price">￥{{good.price}}</text>
+          </view>
+        </view>
+        <view class="good-coupon flex-between dashed-bottom" wx:if="{{grantitem}}">
+          <view class="coupons-content">
+            <text class="coupon" style="background-color: {{theme.major}}">券</text>
+            <text class="coupon-text">优惠券</text>
+          </view>
+          <view class="coupon-title" style="color:{{theme.major}}" bindtap="toCoupon">{{grantitem.kqtitle}}  <icon class="iconfont iconyoujiantou icon-right"></icon></view>
+        </view>
+        <view class="total-content">
+          <view class="total-item">
+              <text class="good-count">总计</text>
+              <text class="good-price">¥ {{total.money?total.money:0}}</text>
+          </view>
+           <view class="total-item">
+              <text class="good-count">优惠</text>
+              <text class="good-price">¥ {{discount?discount:0}}</text>
+          </view>
+           <view class="total-item orderTotalMoney">
+              <text class="good-count">实付</text>
+              <text class="good-price">¥ {{orderTotalMoney?orderTotalMoney:0}}</text>
+          </view>
+        </view>
+    </view> 
+
+  <!--支付方式-->
+  <view class="pay-container">
+    <view class="pay-title">支付方式</view>
+    <view class="flex-between pay-item {{memberPay?'':'no-pay-item'}}" style="display: block;">
+		<view  class="mem-balance">
+			<view class="pay-content">
+			   <image src="../../../image/pay/remeber.png"/>
+			  <text>会员卡<!-- （余额{{memberPay?("￥"+balance):"不足"}}） --></text>
+			</view>
+			<view class="checked-icon" bindtap="changePayType" wx:if="{{memberPay}}" data-paytype="0">
+			  	<image class="check-radio" src="/image/pay/radio_active.png" wx:if="{{paytype == 0}}"></image>
+			    <image class="check-radio" src="/image/pay/radio.png" wx:else></image>
+			</view>
+		</view>
+		
+		<view wx:if="{{memberPay && paytype == 0}}" class="mem-scard">
+			<view wx:for="{{cardInfoList}}" wx:key="{{item.scarduid}}" data-scarduid="{{item.scarduid}}" data-disable="{{item.disable}}" data-index="{{index}}" hover-class="cell__hd-hover" class="weui-cell__hd"  bindtap="changeScard">
+				<view>**** {{item.hideScarduid}}（余额￥{{item.balance}}）</view>
+				<icon class="iconfont icon-danxuan {{item.check ? 'icon-radio-active' : ''}} {{item.disable ? 'icon-radio-disable' : ''}}"></icon>
+			</view>
+			
+		  </view>
+	
+    </view>
+	
+   <view class="flex-between pay-item">
+      <view class="pay-content">
+        <image src="../../../image/pay/weichat.png"/>
+        <text>微信支付</text>
+      </view>
+      <view class="checked-icon" bindtap="changePayType" data-paytype="1">
+       	<image class="check-radio" src="/image/pay/radio_active.png" wx:if="{{paytype == 1}}"></image>
+          <image class="check-radio" src="/image/pay/radio.png" wx:else></image>
+      </view>
+    </view>
+  </view>
+
+  <!---结算-->
+  <view class="cart-wrap clearfix">
+    <view class="c-total-box">
+      <view>
+        <text class="total-unit">¥</text>
+        <text class="new-total">{{orderTotalMoney?orderTotalMoney:0}} </text>
+        <text class="old-total" wx:if="{{discount != 0.00}}">¥{{omoney}} </text>
+      </view>		
+    </view>
+     <view class="c-btns" bindtap="toAddOrderBill">
+        <button  style="background-color:{{roderColor}}" >{{orderBtnTitle}}</button>
+      </view> 
+  </view>
+
+</view>
+
+ 
+
+
+

@@ -1,0 +1,6 @@
+/* pages/agreement/agreement.wxss */
+page{background-color: #ffffff;}
+.title{text-align: center;margin: 40rpx auto;font-weight: bold;font-size: 36rpx;}
+.content{padding: 0 30rpx;}
+.content h2{color: #000000;font-weight: bold;font-size: 28rpx;margin: 20rpx 0;box-sizing: content-box;display: block;line-height: 42rpx;}
+.content view{color: #999999;font-size: 24rpx;text-indent:2em;line-height: 38rpx;}

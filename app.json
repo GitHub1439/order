@@ -1,0 +1,69 @@
+{
+  "pages": [
+    "pages/index",
+    "pages/home/storeIndex/storeIndex",
+    "pages/address/addressList/addressList",
+    "pages/home/searchGood/searchGood",
+    "pages/home/selectStore/selectStore",
+    "pages/order/orderList/orderList",
+    "pages/user/userHome/userHome",
+    "pages/home/placeOrder/placeOrder",
+    "pages/order/orderDetail/orderDetail",
+    "pages/template/template",
+    "pages/coupon/coupon",
+    "pages/address/editAddress/editAddress",
+    "pages/recharge/recharge",
+    "pages/authorize/authorize",
+    "pages/integral/integral",
+    "pages/balance/balance",
+    "pages/agreement/agreement"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于获取您附近的门店"
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "点餐",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#9c9c9c",
+    "selectedColor": "#fa4d50",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index",
+        "iconPath": "image/icons/tab_index.png",
+        "selectedIconPath": "image/icons/tab_index_red.png",
+        "text": "点餐"
+      },
+      {
+        "pagePath": "pages/order/orderList/orderList",
+        "iconPath": "image/icons/tab_order.png",
+        "selectedIconPath": "image/icons/tab_order_red.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/user/userHome/userHome",
+        "iconPath": "image/icons/tab_user.png",
+        "selectedIconPath": "image/icons/tab_user_red.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 60000,
+    "downloadFile": 10000
+  },
+  "sitemapLocation": "sitemap.json",
+  "plugins": {
+    "sendCoupon": {
+      "version": "1.1.5",
+      "provider": "wxf3f436ba9bd4be7b"
+    }
+  }
+}

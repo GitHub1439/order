@@ -1,0 +1,16 @@
+<view class="authorize-container">
+    <view class="top"></view>
+    <view class="authorize-bg">
+      <image src="{{author=='user'?'../../image/author_user.png':'../../image/author_phone.png'}}" class="author-img"/>
+      <view class="tips">{{tips}}</view>
+      <view class="message"><text class="star" style="color: {{theme.major}}">*</text>{{message}}</view>
+    </view>
+    <view class="btns">
+      <block wx:if="{{author=='user'}}">
+          <button class="btn" open-type="getUserInfo"  bindgetuserinfo="bindGetUserInfo" style="background-color:{{theme.major}}">登录</button>
+      </block>
+      <block wx:else>
+          <button class="btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"  style="background-color:{{theme.major}}">确认</button>
+      </block>
+    </view>
+</view>

@@ -1,0 +1,103 @@
+
+
+
+<!-- 普通提示，带按钮  -->
+<!-- <template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template> -->
+<template name='tips'>
+	<view class='pop tips-pop' wx:if='{{tipsShow}}'>
+		<view class='mask' bind:tap='tipsHide' ></view>
+		<view class='pop-container'>
+			<view class='pop-title' wx:if='{{tipsTitle}}' >{{tipsTitle}}</view>
+			<view class='tips-msg' >{{tipsMsg}}</view>
+			<view class='pop-footer' >
+				<button class='no' wx:if='{{noBtn}}' catch:tap='noCallback' >{{noBtnText}}</button>
+				<button class='yes' catch:tap='yesCallback' >{{yesBtnText}}</button>
+			</view>
+		 </view>
+	 </view>
+</template>
+
+
+
+<!-- 停留时间的提示 -->
+<!-- <template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template> -->
+<template name='timeTips'>
+	<view class='pop time-tips-pop' wx:if='{{timeTipsShow}}'>
+		<!-- <view class='mask' bind:tap='timeTipsHide' ></view> -->
+		<view class='pop-container'>
+			<view class='tips-msg'>{{timeTipsMsg}}</view>
+		</view>
+	</view>
+</template>
+
+
+
+<!-- 支付的提示 -->
+<!-- <template is="payTips" data="{{ payTipsShow, isPaySuccess, payTipsMsg, yesBtnText }}"></template> -->
+<template name='payTips'>
+	<view class='pop tips-pop pay-tips-pop' wx:if='{{payTipsShow}}'>
+		<view class='mask' bind:tap='payTipsHide' ></view>
+		<view class='pop-container'>
+			<image class="pay-status-img" wx:if="{{isPaySuccess}}" src="/image/success_img.png" ></image>
+			<image class="pay-status-img" wx:if="{{!isPaySuccess}}" src="/image/fail_img.png" ></image>
+			<image class="pop-close" src="/image/icons/icon_close.png" bind:tap="payTipsHide" ></image>
+			<view class='tips-msg' >{{payTipsMsg}}</view>
+			<view class='pop-footer' >
+				<button class='yes' catch:tap='yesCallback' >{{yesBtnText}}</button>
+			</view>
+		 </view>
+	 </view>
+</template>
+
+<!-- 支付成功的提示，没有取消按钮，只能点击确定然后跳转 -->
+<!-- <template is="paySuccessTips" data="{{ paySuccessTipsShow, paySuccessTipsMsg, paySuccessYesBtnText }}"></template>  -->
+<template name='paySuccessTips'>
+	<view class='pop tips-pop pay-tips-pop' wx:if='{{paySuccessTipsShow}}'>
+		<view class='mask' ></view>
+		<view class='pop-container'>
+			<image class="pay-status-img" src="/image/success_img.png" ></image>
+			<view class='tips-msg' >{{paySuccessTipsMsg}}</view>
+			<view class='pop-footer' >
+				<button class='yes' catch:tap='paySuccessYesCallback' >{{paySuccessYesBtnText}}</button>
+			</view>
+		 </view>
+	 </view>
+</template>
+
+<!-- 弹出需要填写理由 -->
+<!-- <template is="refueReson" data="{{ refueResonTipsShow, refueResonTipsMsg, refueResonYesBtnText }}"></template>  -->
+<template name='refueReson'>
+	<view class='pop tips-pop pay-tips-pop' wx:if='{{refueResonTipsShow}}'>
+		<view class='mask' bind:tap='refueTipsHide' ></view>
+		<view class='pop-container'>
+		 	<view class="reason-content">
+			 <textarea class="reason" auto-height bindinput="getReasonValue" placeholder="{{refueResonTipsMsg}}"  />
+			</view>
+			<view class='pop-footer'>
+				<button class='yes' catch:tap='refueResonCallback' >{{refueResonYesBtnText}}</button>
+			</view>
+		 </view>
+	 </view>
+</template>
+
+<!---预约时间选择--->
+<template name='chooseTime'>
+  <view class="picker-box" wx:if="{{isShow}}">
+    <view class="picker-title">{{title}}</view>
+    <picker-view  indicator-style="height: 40px;"  class="picker-content" value="{{value}}" bindchange="bindChange">
+      <picker-view-column class="days-list">
+        <view class="picker-year" wx:for="{{days}}" wx:key="{{index}}" >{{item}}</view>
+      </picker-view-column>
+      <picker-view-column class="times-list">
+        <view class="time-list" wx:for="{{times}}" wx:for-item="item" wx:key="{{index}}">
+          <text class="picker-hours">{{item[0]}} </text>
+          <text class="picker-minitue">{{item[1]}}</text>
+        </view>
+      </picker-view-column>
+    </picker-view>
+    <view class="btn-list">
+      <text class="exit" catch:tap='exitCallback'>取消</text>
+      <text class="ensure" catch:tap='yesCallback'>确定</text>
+    </view>
+  </view>
+</template>

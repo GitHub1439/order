@@ -1,0 +1,50 @@
+
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<template is="refueReson" data="{{ refueResonTipsShow, refueResonTipsMsg, refueResonYesBtnText }}"></template>
+
+
+
+<block wx:if="{{orderList.length>0}}" >
+	<block wx:for="{{orderList}}" wx:for-item="item" wx:key="index" >
+
+			<view class="order" catch:tap="gotoDetail" data-buid="{{item.buid}}">
+						<view class="store-info" >
+							<view class="storename" >{{item.storename}}</view>
+							<view class="store-address" >订单编号：{{item.buid}}</view>
+							<view class="state" style="color:{{theme.major}}">{{ item.statetext}}</view>
+						</view>
+						<view class="good-info">
+							<view class="good-name">
+								<block wx:if="{{item.billitems.length>0}}" wx:for="{{item.billitems}}" wx:for-item="good" wx:key="produid" >
+									{{good.prodname}}*{{good.amount}}{{(item.billitems.length == 1 || item.billitems.length == index+1)?'':','}}
+								</block>
+
+							</view>
+							<view class="flex-between order-item">
+								<view class="store-address" >{{item.billingdate}}</view>
+								<view class="good-total">
+									<text class="count">共计{{item.amounttotal}}件商品，</text>
+									<text class="price">￥{{ item.needpaytotal ? item.needpaytotal : item.dealtotal}}</text>
+								</view>
+							</view>
+						</view>
+						<view class="btns clearfix" wx:if="{{item.refundstate == 0 && (item.state == 1 || item.state == 0 || item.state == 4)}}">
+							<button class="btn-white" catch:tap="orderDance" data-buid="{{item.buid}}" data-storeuid="{{item.storeuid}}">申请退款</button>
+						</view>
+			</view>
+	</block>
+</block>
+
+
+<view class="no-datas" wx:if="{{orderList.length==0}}"  >
+	<text>{{noList}}</text>
+</view>
+
+
+

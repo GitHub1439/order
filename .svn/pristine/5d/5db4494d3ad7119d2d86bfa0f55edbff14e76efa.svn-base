@@ -1,0 +1,73 @@
+<!--pages/recharge/recharge.wxml-->
+
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<wxs module="filters" src="../../utils/filters.wxs"></wxs>
+<view class="recharge-container">
+  <view class="recharge-content">
+    <view class="business-content">
+      <image src="../../image/user/member_bg.png"></image>
+      <view class="business-info">
+        <view class="flex-between" style="justify-content: space-between;">
+          <view class="business-name"></view>
+          <view class="business-logo">
+            <open-data type="userAvatarUrl"></open-data>
+            <!-- <image src="../../image/user.png"> </image> -->
+          </view>
+        </view> 
+        <view class="total-content">
+          <text class="total-title">余额</text>
+          <view class="total">
+            ￥<text class="money">{{filters.toFix(balance)}}</text>
+          </view>
+        </view>
+        <view class="recharge-tips">充值再消费，享受更多会员权利</view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="recharge-type" >
+    <view class="compute flex-between" style="justify-content: space-between;" wx:if="{{moneyQuantity.length>0}}">
+      <view>{{acrtiveMoney.savevalue}}</view>
+      <view>+</view>
+      <view>{{acrtiveMoney.givevalue}}</view>
+      <view>=</view>
+      <view>{{acrtiveMoney.savevalue + acrtiveMoney.givevalue}}</view>
+    </view>
+
+    <view class="recharge-list flex-between">
+      <view class="recharge-item {{item.recharge ? 'cur-recharge' : ''}}" style="margin-right: {{index%3 == 2 ? 0 : '5%'}};" wx:for="{{moneyQuantity}}" data-index="{{index}}" wx:for-index="index" wx:key="index" bindtap="rechargeMoney">
+        充 <text>{{item.savevalue}}</text>
+      </view>
+	  <view class="recharge-item {{inputRechaarge ? 'cur-recharge' : ''}}" wx:if="{{moneyQuantity.length==0}}">
+		  <input placeholder='其他金额' bindblur="blurTofixed" bindfocus="focusInput" type="digit" name="ortherMoney" value="{{ortherMoney}}" bindinput="moneyInput"></input>
+	  </view>
+    </view>
+  </view>
+
+  <view class="btn" style="background-color:{{theme.major}}" bindtap="rechargebtn" wx:if="{{moneyQuantity.length>0}}">
+    立即充值，到账{{acrtiveMoney.savevalue + acrtiveMoney.givevalue}}元
+  </view>
+  <view class="btn" style="background-color:{{theme.major}}" bindtap="rechargebtn" wx:else>
+    立即充值{{ortherMoney > 0 ? "，到账" + ortherMoney + "元" : ""}}
+  </view>
+  
+  <!-- <block wx:else>
+  	<view class="no-coupon-container">
+  		<view class="no-coupon">暂无储值规则</view>
+  	</view>
+  </block> -->
+  
+  <view class="promise">
+      <view class="icon-box icon1">
+          <icon class="iconfont icon-danxuan {{agreeBtn ? '' : 'icon-box-cancel'}}" bindtap="agree"></icon>
+      </view>
+      <text>点击立即充值，表示您已阅读并已同意</text>
+<text class="agree" bindtap="agreementTopUp">《充值协议》</text>
+  </view>
+</view>

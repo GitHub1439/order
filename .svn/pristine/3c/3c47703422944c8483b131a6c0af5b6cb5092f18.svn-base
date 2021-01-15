@@ -1,0 +1,146 @@
+
+<!-- 引入模板，首页全部都有  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+
+<view class="user-container">
+  <!---地址头像--->
+  <view class="user-info">
+    <view class="address-content">
+      <view class="user-name">
+        <open-data type="userNickName"></open-data>
+      </view>
+       <view class="user-address" bindtap="toAdress">{{selectAddress.address?selectAddress.address:'收货地址>'}}</view>
+    </view>
+    <view class="user-head">
+      <view class="avatar">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <image src="../../../image/user/user-header.png"></image>
+    </view>
+  </view>
+
+  <!--积分、充值-->
+  <view class="middle-content">
+    <!-- <view class="type-list">
+      <view class="type-item" bindtap="toIntegral">
+        积分
+        <text class="count" style="color: {{theme.major}}">{{integral}}</text>
+      </view>
+      <view class="type-item" bindtap="toCoupon">
+        优惠券
+        <text class="count" style="color: {{theme.major}}">{{grantnum}}</text>
+      </view>
+      <view class="type-item" bindtap="toBalance">
+        余额
+        <text class="count" style="color: {{theme.major}}">{{balance}}</text>
+      </view>
+    </view> -->
+    <!--条形码-->
+     <!-- <view class="code-img" wx:if="{{memid}}">
+      <canvas class="barcode" canvas-id="barcode" />
+    </view>
+    <view class="btn-list" wx:if="{{wxcarduid}}">
+      <view class="btn-item recharge" style="border:1rpx solid {{theme.major}};background-color:{{theme.major}}" bindtap="toRecharge">立即充值</view>
+    </view> -->
+	<!-- <view style="position: relative;"> -->
+		<swiper class="value-card-swiper" previous-margin="0rpx" next-margin="{{cardInfoList.length > 1 ? '40rpx' : '' }}" bindchange="bannerSwiper">
+			<swiper-item wx:for="{{cardInfoList}}" wx:for-index="index" wx:key="index" class="value-card" style="padding-right: {{cardInfoList.length > 1 ? '' : '0rpx' }};">
+				<view class="value-card-view" style="background: url({{imgurl}}/img/scard/scard0.png);background-size: 100% 100%;">
+					<view><view class="scard-img"><image src="../../../image/scard.png" class="scard"/><text>{{store.storename}}</text></view><view class="recharge"  hover-class="recharge-hover" data-balance="{{item.balance}}" data-scarduid="{{item.scarduid}}" bindtap="toRecharge">充值></view></view>
+					<view>
+						<view data-balance="{{item.balance}}" data-scarduid="{{item.scarduid}}" bindtap="toBalance">
+							<view class="mem-num">{{item.balance}}</view>
+							<view class="mem-text">余额</view>
+						</view>
+						<view bindtap="toCoupon">
+							<view class="mem-num">{{grantnum}}</view>
+							<view class="mem-text">优惠券</view>
+						</view>
+						<view bindtap="toIntegral">
+							<view class="mem-num">{{integral}}</view>
+							<view class="mem-text">积分</view>
+						</view>
+					</view>
+					<view>
+						<view class="canvas-box"><canvas class="barcode" canvas-id="barcode{{index}}" /></view>
+						<view class="card-num">{{memid}}</view>
+					</view>
+				</view>
+				<!-- <image src="../../../image/scard{{index % cardInfoList.length}}.png" style="width: {{cardInfoList.length > 1 ? 'calc(100% - 40rpx)' : '100%'}};" class="bg-img" alt=""></image> -->
+				
+			</swiper-item>
+			
+		</swiper>
+		<!-- <view class="canvas-box-swiper">
+			<view class="canvas-box"><canvas class="barcode" canvas-id="barcode" /></view>
+			<view class="card-num">{{memid}}</view>
+		</view> -->
+		
+			
+		<!-- </view> -->
+	<view class="pagination">
+		<i class="{{bannerCurrent == index ? 'pagination-item' : ''}}" wx:for="{{cardInfoList}}" wx:for-index="index" wx:key="index"></i>
+		<!-- <i class=""></i> -->
+	</view>
+  </view>
+
+  <!--我的订单--->
+  <view class="order-content">
+    <view class="order-type"> 
+      <view class="my-order">我的订单</view>
+      <view class="all-order"  bindtap="toOrder" data-state=""></view>
+    </view>
+    <view class="order-list">
+      <view class="order-item" bindtap="toOrder" data-eatway="1" data-state="1">
+        <view class="icon-box icon1">
+           <icon class="iconfont icondaipeisong-"></icon>
+        </view>
+        <view>待发货</view>
+      </view>
+     <view class="order-item" bindtap="toOrder" data-eatway="2" data-state="1">
+       <view class="icon-box icon2">
+           <icon class="iconfont iconxiaochengxubiaozhun_fuzhi-"></icon>
+        </view>
+        <view>待取餐</view>
+      </view>
+     <view class="order-item" bindtap="toOrder" data-state="2">
+        <view class="icon-box icon3">
+           <icon class="iconfont icondaipingjia-"></icon>
+        </view>
+        <view>待评价</view>
+      </view>
+     <view class="order-item" bindtap="toOrder" data-state="-1">
+        <view class="icon-box icon4">
+           <icon class="iconfont iconyiquxiao-"></icon>
+        </view>
+        <view>已取消</view>
+      </view>
+    </view>
+  </view>
+  
+  <!---轮播-->
+  <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">  
+        <block wx:for="{{images}}" wx:for-index="index" wx:key="index">  
+          <swiper-item>  
+            <image src="{{item}}" class="slide-image" mode="aspectFill"/>  
+          </swiper-item>  
+        </block>  
+  </swiper>
+
+  
+  
+  
+
+</view>
+
+
+
+
+
+
+

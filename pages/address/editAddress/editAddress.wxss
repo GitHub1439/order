@@ -1,0 +1,58 @@
+page {
+  padding-top: 20rpx;
+}
+.total-row {
+  position: relative;
+  height: 100rpx;
+  padding: 10rpx 30rpx 0;
+  text-align:right;
+  background-color:#fff;
+}
+.total-row:nth-last-child(1){
+  padding-bottom: 10rpx; 
+}
+.total-row::after {
+  position: absolute;
+  right:0;
+  bottom:0;
+  display: block;
+  content:'';
+  width:calc(100% - 220rpx);
+  border-bottom: 1px solid #EAEBF0;
+}
+.total-row:nth-last-child(1)::after{
+  border-bottom: 1px solid transparent;
+}
+input {
+  height:90rpx;
+  text-align: left;
+}
+.sex {
+  float: left;
+  margin-right: 60rpx; 
+  margin-top: 15rpx;
+}
+
+.total-row text.sm-text {
+  display: inline-block;
+  height: 90rpx;
+  width:190rpx;
+  line-height: 90rpx;
+  text-align:justify;
+  font-size: 32rpx;
+  color: #1f1f1f;
+}
+.bottom-btns{
+  margin-top: 90rpx;
+  background-color: #F5F6FA;
+}
+.icon-address {
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: middle;
+}
+.padd-bottom {
+  padding-bottom: 10rpx;
+}
+

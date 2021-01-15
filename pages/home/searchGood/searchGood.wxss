@@ -1,0 +1,43 @@
+/* pages/home/searchGood/searchGood.wxss */
+page{
+  height: 100%;
+  padding-top: 100rpx;
+}
+.search-result-container{
+  padding:20rpx 20rpx 0;
+  font-size: 26rpx;
+}
+.search-history{
+  padding-top: 20rp;
+}
+
+.history-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #1f1f1f;
+}
+.clear-search {
+  color: #AEB1BE;
+}
+.history-item {
+  display: inline-block;
+  padding: 15rpx 20rpx;
+  color: #70747F;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+}
+.good-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 30rpx;
+  background-color: #fff;
+  font-size: 26rpx;
+  color: #1f1f1f;
+}
+.good-price {
+  color: #70747F;
+}

@@ -1,0 +1,381 @@
+
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<!---搜索--->
+<view class="search-box">
+	<view class="search-content" bind:tap="searchGood">
+		<icon class="iconfont icon-sousuo"></icon>
+		<text class="search-holder">搜索</text>
+	</view>
+</view>
+
+<!---地址-->
+<view class="store-info flex" wx:if="{{store}}">
+	<view class="store-content" bind:tap="gotoSelectStore"  >
+		<view class="storename" >
+			{{store.storename}}
+			<icon class="iconfont icon-youjiantou"></icon>
+		</view>
+		<view class="store-address" >
+			<icon class="iconfont icon-weizhi"></icon>
+			<text>	{{store.vcaddr}}</text>
+			</view>
+	</view>
+	<view class="eat-type flex" wx:if="{{showType}}">
+		<text data-num="0" class="{{eatType==0?'choosed':''}}" bind:tap="choosedWay">到店</text>
+		<text data-num="1" class="{{eatType==1?'choosed':''}}" bind:tap="choosedWay" >外卖</text>
+	</view>
+</view>
+
+
+
+<!-- 商品区 [[ -->
+<view class="goods-area flex {{total.count>0?'goods-area-bottom':''}}">
+
+	<block wx:if="{{menus.length>0}}" >
+
+		<scroll-view scroll-y="true"class="left-side" scroll-into-view="{{leftView}}" scroll-with-animation="true" class="left-side">      
+			<!-- 菜单列表 [[ -->
+			<block wx:for="{{menus}}"  wx:key="prodclassuid" wx:for-item="menu" >
+
+				<view class="menu-item {{ currentMenusId == menu.prodclassuid ? 'active' : ''}}" data-id="{{menu.prodclassuid}}"  bind:tap="selectMenu">
+					<image wx:if="{{ menu.featurelable && menu.featurelable==1 }}" class="menu-hot" src="/image/icons/icon_menu_hot.png" ></image>
+					<image wx:if="{{ menu.featurelable && menu.featurelable==2 }}" class="menu-new" src="/image/icons/icon_menu_new.png" ></image>
+					<text class="m-menu-name">{{menu.classname}}</text>
+					<view class="m-menu-count" style="background-color: {{theme.assist}};color:{{theme.major}}" wx:if="{{menu.count>0}}" >{{menu.count}}</view>
+				</view>
+
+			</block>
+			<!-- 菜单列表 ]] -->
+		</scroll-view>
+
+		<scroll-view scroll-y="true" scroll-into-view="{{toView}}" scroll-with-animation="true" class="right-side" bindscroll="scroll">
+
+				<swiper autoplay="true" interval="3000" duration="100" class="swiper-box" id="top" style="height:{{store.store_photo?'285rpx':'0'}}">
+				
+					<!-- 通过store门店数据自带过来图片 -->
+						<swiper-item class="swiper-item">
+							<image class="slide-image" src="{{store.store_photo}}" />
+						</swiper-item>
+				</swiper>
+				<!-- 滑动广告 ]]  -->
+			
+			<block wx:for="{{menus}}"  wx:key="prodclassuid" wx:for-item="menu" >
+
+				<view class="good-item">	
+					<!--分类--->
+					<view class="class-name" id="{{'d'+menu.prodclassuid}}">{{menu.classname}}</view>
+
+					<block wx:for="{{ menu.proditems }}"  wx:key="produid" wx:for-item="good">	
+					<!-- 商品列表 -->
+						<view class="good {{index==0?'first-good':''}}" data-id="{{good.produid}}" data-prodclassuid="{{good.prodclassuid}}" id="{{'d'+good.produid}}">
+							<view class="g-info" data-id="{{good.produid}}" data-prodclassuid="{{good.prodclassuid}}" bind:tap="lookLgImg" >
+								<view class="g-pic">
+									<image class="image" wx:if="{{good.imageurl}}" src="{{good.imageurl}}" />
+									<image class="image" wx:if="{{!good.imageurl}}" src="/image/no_image.jpg" />
+								</view>
+								<view class="g-detail" >
+									<view class="g-detail-name">{{good.prodname}}</view>
+									<view class="g-detail-content">
+										<view class="g-detail-type">
+											<text class="g-hot" style="background-color:{{theme.assist}};color:{{theme.major}}"  wx:if="{{good.hotproducts == 1}}">热卖</text>
+											<text class="g-new" wx:if="{{good.newproducts == 1}}" >新品</text>
+										</view>
+										<view class="g-detail-description" >{{good.description}}</view>
+									</view>
+									<view class="g-detail-money">¥{{good.price}}</view>
+								</view>
+							</view>
+
+							<block wx:if="{{!good.more}}" >
+								<view class="g-count" >
+									<view class="g-count-icon" wx:if="{{ good.count>0 }}" 
+										data-id="{{good.produid}}" 
+										data-prodclassuid="{{good.prodclassuid}}" 
+										bind:tap="minusCount">
+										<icon class="iconfont icon-jian icon-btn"></icon>
+									</view>
+									<view class="g-count-text" wx:if="{{ good.count>0 }}" >{{good.count}}</view>
+									<view class="g-count-icon" 
+										data-id="{{good.produid}}" 
+										data-prodclassuid="{{good.prodclassuid}}" 
+										bind:tap="addCount">
+											<icon class="iconfont icon-jia icon-btn" style="color:{{theme.major}}"></icon>
+									</view>
+								</view>
+							</block>
+							<block wx:if="{{good.more}}" >
+								<view class="selection-attribute" 
+									data-id="{{good.produid}}" 
+									data-prodclassuid="{{good.prodclassuid}}" 
+									bind:tap="selectAttribute"  style="background-color:{{theme.major}}">
+									<view class="num" wx:if="{{ good.count>0 }}" style="background-color:{{theme.assist}};color:{{theme.major}}">{{good.count}}</view>
+									<text>选规格</text>
+								</view>
+							</block>
+						</view>
+					</block>
+				</view>
+			</block>
+		</scroll-view>
+	</block>
+
+	<view class="no-datas" wx:if="{{menus.length==0}}" >{{noGoodsMsg}}</view>
+</view>
+<!-- 商品区 ]] -->
+
+<!-- 展示商品大图 [[ -->
+<view class="pop" wx:if="{{lgImgGoodShow}}" >
+	<view class="mask" bind:tap="changeLgImgGoodShow" ></view>
+
+	<view class="pop-container good-img-area" data-id="{{lookLgImgGood.produid}}" >
+		<view class="good specialGood" data-id="{{lookLgImgGood.produid}}" data-prodclassuid="{{lookLgImgGood.prodclassuid}}" >
+							<view class="g-info" data-id="{{lookLgImgGood.produid}}" data-prodclassuid="{{lookLgImgGood.prodclassuid}}">
+								<view class="g-pic">
+									<image class="image" wx:if="{{lookLgImgGood.imageurl}}" src="{{good.imageurl}}" />
+									<image class="image" wx:if="{{!lookLgImgGood.imageurl}}" src="/image/no_image.jpg" />
+								</view>
+								<view class="g-detail" >
+									<view class="g-detail-name">{{lookLgImgGood.prodname}}</view>
+									<view class="g-detail-content">
+										<view class="g-detail-type">
+											<text class="g-hot" style="background-color:{{theme.assist}};color:{{theme.major}}"  wx:if="{{good.hotproducts == 1}}">热卖</text>
+											<text class="g-new"  wx:if="{{good.newproducts == 1}}">新品</text>
+										</view>
+										<view class="g-detail-description">{{lookLgImgGood.description}}</view>
+									</view>
+								</view>
+							</view>
+						</view>	
+
+		<view class="good-pop-footer" >
+			<view class="price" style="color:{{theme.major}}" >￥{{ lookLgImgGood.price }}</view>
+
+			<block wx:if="{{!lookLgImgGood.more}}" >
+				<view class="g-count" >
+					<view class="g-count-icon" wx:if="{{ lookLgImgGood.count>0 }}" 
+						data-id="{{lookLgImgGood.produid}}" 
+						data-prodclassuid="{{lookLgImgGood.prodclassuid}}" 
+						data-lgimg="true" 
+						bind:tap="minusCount" >
+						<icon class="iconfont icon-jian icon-btn"></icon>
+					</view>
+					<view class="g-count-text" wx:if="{{ lookLgImgGood.count>0 }}" ><text>{{lookLgImgGood.count}}</text></view>
+					<view class="g-count-icon" 
+						data-id="{{lookLgImgGood.produid}}" 
+						data-prodclassuid="{{lookLgImgGood.prodclassuid}}" 
+						data-lgimg="true" 
+						bind:tap="addCount">
+						<icon class="iconfont icon-jia icon-btn" style="color:{{theme.major}}"></icon>
+					</view>
+				</view>
+			</block>
+			<block wx:if="{{lookLgImgGood.more}}" >
+				<view class="selection-attribute" 
+					data-id="{{lookLgImgGood.produid}}" 
+					data-prodclassuid="{{lookLgImgGood.prodclassuid}}" 
+					data-lgimg="true" 
+					bind:tap="selectAttribute"  style="background-color:{{theme.major}}">
+					<view class="num" wx:if="{{ lookLgImgGood.count>0 }}" style="background-color:{{theme.assist}};color:{{theme.major}}">{{lookLgImgGood.count}}</view>
+					<text>选规格</text>
+				</view>
+			</block>
+		</view>
+
+	</view>
+</view>
+<!-- 展示商品大图 ]] -->
+
+<!---优惠金额--->
+<!-- <view class="promotion-container" style="background-color: {{theme.minor}}">
+	已优惠金额1.5元
+</view> -->
+
+<!-- 购物车 [[ -->
+<view class="cart-wrap clearfix" wx:if="{{store}}" >
+
+	<view class="c-icon-area" bind:tap="showCartDetail" >
+		<block wx:if="{{ total.count>0 }}">
+			<image src="/image/cart-on.png"/>
+			<text class="c-total-count" wx:if="{{ total.count>0 }}" style="background-color:{{theme.major}}">{{total.count}}</text>
+		</block>
+		<block wx:else>
+			<image src="/image/cart.png"/>
+		</block>
+	</view>
+	<view class="c-total-box">
+			<block wx:if="{{ total.count>0 }}">
+				<view>
+					<text class="total-unit">¥</text>
+					<text class="new-total">{{total.money}} </text>
+					<text class="old-total">¥{{total.omoney}} </text>
+				</view>
+			</block>
+			<block wx:else>
+					<view class="c-total-no">
+						未选购
+					</view>
+			</block>
+	</view>
+	<view class="c-btns">
+		<button class="order-btn" bind:tap="gotoSettlement" style="background-color:{{roderColor}}" >{{orderBtnTitle}}</button>
+	</view>
+
+</view>
+<!-- 购物车 ]] -->
+
+
+
+<!-- 购物车详情 [[ -->
+<view class="cart-detail" wx:if="{{cartDetailShow}}" >
+	<view class="mask" bind:tap="changeCartDetailShow" ></view>
+
+	<view class="cart-detail-area">
+
+		<view class="c-d-title border-blue-left" >
+			<view class="c-d-left" >
+				<text>已选商品</text>
+			</view>
+			<view class="c-d-right" bind:tap="cartClearEvent" >
+				<image class="icon-cart-clear" src="/image/icons/icon_cart_clear.png" />
+				<text>清空</text>
+			</view>
+		</view>
+
+		<scroll-view scroll-y="true" class="cart-goods" >
+
+			<block wx:for="{{selectData}}"  wx:for-index="idx" wx:key="produid" wx:for-item="good" >
+				
+
+					<view class="good cart-good" data-id="{{good.produid}}" data-prodclassuid="{{good.prodclassuid}}" >
+							<view class="g-info" data-id="{{good.produid}}" data-prodclassuid="{{good.prodclassuid}}" >
+								<view class="g-detail" >
+									<view class="g-detail-name">{{good.prodname}}</view>
+									<view class="g-detail-content"  wx:if="{{good.attributes}}">
+										<view class="g-detail-type">
+											<text>{{good.attributes}}</text>
+										</view>
+									</view>
+									<view class="g-detail-money" style="color:{{theme.major}}">¥{{good.price}}</view>
+								</view>
+							</view>
+							<view class="g-count" >
+									<view class="g-count-icon" 
+										data-id="{{good.produid}}" 
+										data-oproduid="{{good.oproduid ? good.oproduid : ''}}" 
+										data-exprodid="{{good.exprodid ? good.exprodid : '' }}" 
+										data-prodclassuid="{{good.prodclassuid}}" 
+										data-prodname="{{good.prodname}}" 
+										data-price="{{good.price}}" 
+										data-attributes="{{good.attributes ? good.attributes : ''}}" 
+										bind:tap="cartMinusCount">
+										<icon class="iconfont icon-jian icon-btn"></icon>
+									</view>
+									<view class="g-count-text"  >{{good.count}}</view>
+									<view class="g-count-icon" 
+											data-id="{{good.produid}}" 
+											data-oproduid="{{good.oproduid ? good.oproduid : ''}}" 
+											data-exprodid="{{good.exprodid ? good.exprodid : '' }}" 
+											data-prodclassuid="{{good.prodclassuid}}" 
+											data-prodname="{{good.prodname}}" 
+											data-price="{{good.price}}" 
+											data-attributes="{{good.attributes ? good.attributes : ''}}" 
+											bind:tap="cartAddCount">
+											<icon class="iconfont icon-jia icon-btn" style="color:{{theme.major}}"></icon>
+									</view>
+								</view>
+					</view>
+
+			</block>
+		</scroll-view>
+
+	</view>
+
+</view>
+<!-- 购物车详情 ]] -->
+
+
+<!-- 选择商品属性 [[ -->
+<view class="pop choose-spec" wx:if="{{chooseSpecLock}}" >
+	<view class="mask" bind:tap="changeSpecLock" ></view>
+
+	<view class="pop-container choose-spec-area" data-id="{{specialGood.produid}}" >
+		<view class="pop-close" bind:tap="changeSpecLock">
+			×
+		</view>
+
+		<view class="good specialGood" data-id="{{specialGood.produid}}" data-prodclassuid="{{specialGood.prodclassuid}}" >
+							<view class="g-info" data-id="{{specialGood.produid}}" data-prodclassuid="{{specialGood.prodclassuid}}">
+								<view class="g-pic">
+									<image class="image" wx:if="{{specialGood.imageurl}}" src="{{good.imageurl}}" />
+									<image class="image" wx:if="{{!specialGood.imageurl}}" src="/image/no_image.jpg" />
+								</view>
+								<view class="g-detail" >
+									<view class="g-detail-name">{{specialGood.prodname}}</view>
+									<view class="g-detail-content">
+										<view class="g-detail-type">
+											<text class="g-hot" style="background-color:{{theme.assist}};color:{{theme.major}}" wx:if="{{specialGood.hotproducts}}">热卖</text>
+											<text class="g-new" wx:if="{{specialGood.newproducts}}">新品</text>
+										</view>
+										<view class="g-detail-description">{{specialGood.description}}</view>
+									</view>
+								</view>
+							</view>
+						</view>	
+
+		<scroll-view scroll-y="true" class="content" >
+			
+			<!-- 主单位 -->		
+			<view class="content-row" wx:if="{{ specialGood.exunititems.length>0 }}"  >
+				<view class="label" >单位</view>
+				<view class="label-right" >
+					<block wx:for="{{specialGood.exunititems}}"  wx:key="produid" wx:for-item="exunititem" >
+						<view class="small-label {{ exunititem.select ? 'active' : '' }}" data-exprodid="{{exunititem.exprodid}}" data-produid="{{exunititem.produid}}" data-prodclassuid="{{exunititem.prodclassuid}}" bind:tap="chooseExunit" >{{ exunititem.exunit ? exunititem.exunit : exunititem.unit }}</view>
+
+					</block>
+				</view>
+			</view>
+
+			
+			<!-- 其他属性 -->
+			<block wx:if="{{ specialGood.flaclassitems.length>0 }}" wx:for="{{specialGood.flaclassitems}}" wx:for-index="idx" wx:key="produid" wx:for-item="flaclassitem" >				
+				<view class="content-row" >
+					<view class="label" >{{flaclassitem.flaclassname}}</view>
+					<view class="label-right" >
+						<block wx:for="{{flaclassitem.flanameitems}}"  wx:for-index="idx" wx:key="flaid" wx:for-item="item" >
+
+							<view class="small-label {{ item.select ? 'active' : '' }}" data-flaid="{{item.flaid}}" data-flaclassid="{{item.flaclassid}}"  data-produid="{{item.produid}}"  data-prodclassuid="{{specialGood.prodclassuid}}" bind:tap="chooseAttribute" >{{ item.flaname }}</view>
+
+						</block>
+					</view>
+				</view>
+			</block>
+		</scroll-view>
+
+		<view class="good-pop-footer" >
+			<view class="price"style="color:{{theme.major}}"  >￥{{ (specialGood.showPrice!=null || specialGood.showPrice!=undefined) ? specialGood.showPrice : specialGood.price }}</view>
+			<view class="btns" >
+				<button data-prodclassuid="{{specialGood.prodclassuid}}" data-produid="{{specialGood.produid}}" bind:tap="addCart" style="background-color:{{theme.major}}" >
+					<image src="/image/icons/icon_cart.png" ></image>
+					<text>加入购物车</text>
+				</button>
+			</view>
+		</view>
+	</view>
+</view>
+
+
+
+<!-- 选择商品属性 ]] -->
+
+<!-- 不营业时不可点击商品区域 -->
+<!-- <view class="forbid-click" wx:if="{{store.state!=0}}" ></view> -->
+
+
+
+

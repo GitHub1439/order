@@ -1,0 +1,36 @@
+/* pages/authorzie/authorize.wxss */
+page{
+  background-color: #fff;
+}
+.top{
+  height: 40rpx;
+  background-color: #F5F6FA;
+}
+.authorize-bg {
+    padding-top: 255rpx;
+    text-align: center;
+}
+.author-img {
+  width: 266rpx;
+  height: 266rpx;
+}
+.tips {
+  font-size: 36rpx;
+  color: #94969E;
+  margin-top: 30rpx;
+}
+.message{
+  font-size: 26rpx; 
+  color: #B0B3BF;
+  margin-top: 20rpx;
+}
+.btns {
+  position: fixed;
+  bottom: 200rpx;
+  width: 100%;
+  text-align: center;
+}
+.btn {
+  width: 650rpx;
+  color: #fff;
+}

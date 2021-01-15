@@ -1,0 +1,47 @@
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<!---搜索--->
+<view class="search-box">
+	<view class="search-content">
+		<icon class="iconfont icon-sousuo"></icon>
+		<input class="search-key" placeholder="搜索" placeholder-class="search-placeholder" confirm-type="search" bindconfirm="search"></input>
+	</view>
+</view>
+<!---搜索--->
+<view class="search-result-container" wx:if="{{goods.length==0}}" >
+  <view class="search-history" wx:if="{{history.length>0}}">
+    <view class="history-title">
+      <text>历史搜索</text>
+      <view class="clear-search" bind:tap="clearHistory">
+       <image class="icon-cart-clear" src="/image/icons/icon_cart_clear.png" />
+        <text>清空</text>
+      </view>
+    </view>
+    <view class="history-content">
+        <text class="history-item" wx:for="{{ history }}"  wx:key="produid" wx:for-item="good" data-produid="{{good.produid}}" data-prodclassuid="{{good.prodclassuid}}"  data-prodname="{{good.prodname}}"
+         data-storeuid="{{good.storeuid}}" bind:tap="choosedGood">{{good.prodname}}</text>
+    </view>
+  </view>
+  <view class="search-history hot-search" wx:if="{{hotData.length>0}}">
+    <view class="history-title">
+      <text>热门搜索</text>
+    </view>
+    <view class="history-content">
+       <text class="history-item" wx:for="{{ hotData }}"  wx:key="produid" wx:for-item="good" data-produid="{{good.produid}}" data-prodclassuid="{{good.prodclassuid}}"  data-prodname="{{good.prodname}}"
+         data-storeuid="{{good.storeuid}}" data-ishot="true" bind:tap="choosedGood">{{good.prodname}}</text>
+    </view>
+  </view>
+</view>
+
+<!---商品--->
+<view class="searcGood-container">
+  <view class="good-item " wx:for="{{goods}}" wx:for-item="good" wx:key="produid" data-produid="{{good.produid}}"  data-prodclassuid="{{good.prodclassuid}}" data-prodname="{{good.prodname}}"  data-storeuid="{{good.storeuid}}" bind:tap="choosedGood">
+    <text class="good-name">{{good.prodname}}</text>
+    <text class="good-price">￥{{good.price}}</text>
+  </view>
+</view>

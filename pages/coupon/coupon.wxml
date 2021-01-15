@@ -1,0 +1,27 @@
+<!--pages/coupon/coupon.wxml-->
+<!---没有可以用全券---->
+<block wx:if="{{grantitems.length==0}}">
+  <view class="no-coupon-container">
+     <view class="no-coupon">暂无优惠券</view>
+  </view>
+</block>
+
+<!--优惠券--->
+<block wx:else>
+  <view class="coupon-title" wx:if="{{useNumber>0}}">您有 {{useNumber}} 张优惠券待使用</view>
+  <view class="coupon-container">
+    <view class="coupon-item" wx:for="{{grantitems}}" wx:key="kqid" wx:for-item="item" bindtap="returnPayOrder" data-index="{{index}}" data-isuse="{{item.isuse}}">
+      <image src="{{item.isuse?'../../image/coupon/use_coupon.png':'../../image/coupon/coupon.png'}}"></image>  
+      <view class="coupon-contnt">
+        <view class="coupon-info coupon-color {{item.isuse?'':'no-coupon-color'}}">
+          <view class="info-title">{{item.kqtitle}}</view>
+          <view class="type-date-coupon">
+            <view class="type-coupon">{{item.kqtype==1?"代金券":"折扣券"}}</view>
+            <view>{{item.validstartdate}} ~ {{item.validdate}}</view>
+          </view>
+        </view> 
+      <view class="count">×1</view>
+      </view>
+    </view>
+  </view>
+</block>

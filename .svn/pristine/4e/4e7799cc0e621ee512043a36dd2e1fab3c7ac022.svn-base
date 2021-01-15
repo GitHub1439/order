@@ -1,0 +1,59 @@
+<!-- 引入模板  -->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+
+<view>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+      <input name="adrsuid" value="{{adrsuid}}" style="display:none" ></input>
+      <view class="o-total total-row clearfix" >
+        <text class="sm-text" >收货人</text>
+        <input placeholder='请填写收货人姓名' name="consignee" value="{{consignee}}"></input>
+      </view>
+      <view class="o-total total-row clearfix" >
+        <text class="sm-text sex-title" ></text>
+        <input name='sex' style="display:none;" value="{{sex}}"></input>
+        <view class="sex man" bindtap='chooseSex'>
+            <image class="icon-address" wx:if="{{sex == 1}}" src="/image/pay/radio_active.png" ></image>
+            <image class="icon-address"  src="/image/pay/radio.png" wx:else></image> 
+            先生
+        </view>
+        <view class="sex woman" bindtap='chooseSex'>
+            <image class="icon-address" wx:if="{{sex == 0}}" src="/image/pay/radio_active.png" ></image>
+            <image class="icon-address"  src="/image/pay/radio.png" wx:else></image>       
+            女士
+        </view>
+      </view>
+      <view class="o-total total-row clearfix" >
+        <text class="sm-text" >联系方式</text>
+        <input placeholder='请填写收货号码' name="mobileno" maxlength='11' value="{{mobileno}}"></input>
+      </view>
+      <view class="o-total total-row clearfix padd-bottom" >
+        <text class="sm-text" >收货地址</text>
+        <!-- <view class="editAddress" wx:if="{{pageType == 'edit'}}" bindtap='chooseLocation'>{{address}}</view> -->
+        <input  name="address"  value="{{address}}"  placeholder='点击选择地址' bindtap='chooseLocation'></input>
+        <input name="longitude" value="{{longitude}}" style="display:none"></input>
+        <input name="latitude" value="{{latitude}}" style="display:none"></input>
+      </view>
+      <view class="o-total total-row clearfix padd-bottom" wx:if="{{place}}">
+        <text class="sm-text" >详细位置</text>
+        <input name="place" placeholder='如：楼层/门牌号'></input>
+      </view>
+        <view class="o-total total-row clearfix" >
+        <text class="sm-text" ></text>
+        <input name='isdefault' style="display:none;" value="{{isdefault}}"></input>
+        <view class="sex man" bindtap='setDefault'>
+            <image class="icon-address" wx:if="{{isdefault == 1}}" src="/image/pay/radio_active.png" ></image>
+            <image class="icon-address"  src="/image/pay/radio.png" wx:else></image> 
+            设为默认地址
+        </view>
+      </view>
+     
+        <view class="bottom-btns">
+          <button class="btn-red" formType="submit" style="background-color:{{theme.major}}">确定</button>
+        </view>
+  </form>
+</view>

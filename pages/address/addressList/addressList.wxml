@@ -1,0 +1,39 @@
+<!--pages/address/addressList/addressList.wxml-->
+<import src="/pages/template/template.wxml" />
+
+<template is="tips" data="{{ tipsShow, tipsTitle, tipsMsg, yesBtnText, noBtn, noBtnText }}"></template>
+
+<template is="timeTips" data="{{ timeTipsShow, timeTipsMsg }}"></template>
+
+<!--地址列表--->
+<view class="container">
+  <block wx:if="{{items.length>0}}">
+    <view class="address-content"  wx:for="{{items}}" wx:key="index"  data-index="{{index}}">
+      <view class="notChoose" wx:if="{{index == fristIndex}}">以下地址附近无可配送门店，暂不可配送</view>
+      <view class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" bind:touchstart="touchstart" bind:touchmove="touchmove" data-index="{{index}}">
+        <view class="content" bindtap="setDefalut" data-item="{{item}}">
+          <view class="name" >
+            <text>{{item.consignee}}</text>
+            |
+            <text>{{item.mobileno}}</text>
+
+            <view class="edit" catchtap='editAdress' data-address="{{item}}" wx:if="{{!item.isTouchMove}}">编辑</view>
+          </view>
+          <view class="address" >
+            <text class="default" style="background-color:{{item.isdefault == 1 && item.issenddistance == 0?theme.major:'#AEB1BE'}}"   wx:if="{{item.isdefault == 1}}">默认地址</text>
+            {{item.address}}
+          </view>
+        </view>
+        <view class="del" data-adrsuid="{{item.adrsuid}}" catchtap="del" data-index="{{index}}" style="background-color:{{theme.major}}" >删除</view>
+      </view>
+    </view>
+   </block> 
+   <block wx:else>
+    <view class="nodata-content">
+      <view class="nodata">暂无地址</view>
+    </view>
+   </block>
+</view>
+<!--新增--->
+<view class="add-btn" style="background-color:{{theme.major}}" bind:tap="addAddress">新增地址</view>
+
